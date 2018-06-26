@@ -11,11 +11,11 @@ int main(void)
         printf("Enter a height greater than 0 but no greater than 23\n");
         height = get_int("pyramid height: ");
     }
-    while (height < 1 || height > 23);
+    while (height < 0 || height > 23);
 
-    int width = height;
+    int width = height - 1;
 
-    for (int i = -1; i < height; i++)
+    for (int i = 0; i < height; i++)
     {
         int hash = height - width;
         for (int space = 0; space < width; space++)

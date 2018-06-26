@@ -46,7 +46,8 @@ int main(void)
                 LuhnCheck = LuhnCheck + release;
                 release = 0; //set release back to 0 in case we find any more 2 digit products
             }
-            else {
+            else
+            {
                 //If the product of the digit and 2 is less than 9 then just add the product to the Luhn number
                 LuhnCheck = LuhnCheck + (Digit * 2);
             }
@@ -71,14 +72,14 @@ int main(void)
         }
 
         //remove the digit we've been working with so far to make room for the next one
-        CardNumber = (CardNumber - Digit)/10;
+        CardNumber = (CardNumber - Digit) / 10;
 
     }
     while (CardNumber > 0); //Repeat until there are no digits left
 
 //Below we will check if our credit cards work!
     //First step is to see if the number passes the Luhn algorithm check. if it does we go inside
-    if (LuhnCheck % 10 == 0 || counter < 13)
+    if (LuhnCheck % 10 == 0 || counter < 13 || counter > 16)
     {
         //We check if the card counter is 13
         if (counter == 13)
@@ -89,6 +90,10 @@ int main(void)
                 //if all of the above are true then the card is a VISA
                 printf("VISA\n");
             }
+            else
+            {
+                printf("INVALID\n");
+            }
         }
 
         //if the card passes Luhn and is 15 digits long
@@ -97,8 +102,21 @@ int main(void)
             //we cehck the validity of the card by grabbing the 14th digit (saved in validityAMEX) and adding it to the 15th digit
             //For AMEX validityCheck should equal 7 OR 10
             validityCheck = validityAMEX + Digit;
-            if (Digit == 3 && (validityCheck == 7 || validityCheck == 10))
-            printf("AMEX\n");
+            if (Digit == 3)
+            {
+                if (validityCheck == 7 || validityCheck == 10)
+                {
+                    printf("AMEX\n");
+                }
+                else
+                {
+                    printf("INVALID\n");
+                }
+            }
+            else
+            {
+                printf("INVALID\n");
+            }
         }
 
         //is the card length 16 digits after Luhn is good?
@@ -110,7 +128,7 @@ int main(void)
             //if the first digit is 5 and validityCheck matches then MASTER CARD
             if (Digit == 5 && (validityCheck == 6 || validityCheck == 7 || validityCheck == 8 || validityCheck == 9 || validityCheck == 10))
             {
-                printf("MASTER CARD\n");
+                printf("MASTERCARD\n");
             }
 
             //if the Luhn passes, and the card is 16 long, and the first digit is 4 then its VISA
@@ -124,6 +142,10 @@ int main(void)
             {
                 printf("INVALID\n");
             }
+        }
+        else
+        {
+            printf("INVALID\n");
         }
     }
 
