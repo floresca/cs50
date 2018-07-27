@@ -14,7 +14,7 @@ int duration(string fraction)
     int numerator = fraction[0] - '0';
     int denominator = fraction[2] - '0';
     //We multiply the numerator by 8 and denominator by 1 to get a whole digit calling out the octave
-    return (numerator * 8)/(denominator * 1);
+    return (numerator * 8) / (denominator * 1);
 
 }
 
@@ -70,32 +70,32 @@ int frequency(string note)
         }
         if (Octave > 4)
         {
-            semitone = 2 + (12*(Octave - 4));
+            semitone = 2 + (12 * (Octave - 4));
         }
         else
         {
-            semitone = - 1 * ((12*(4 - Octave)) - 2);
+            semitone = - 1 * ((12 * (4 - Octave)) - 2);
         }
     }
 
     //All other notes get their semitone called out
-    switch(carrizo)
+    switch (carrizo)
     {
         case 'C':
-        semitone = 9;
-        break;
+            semitone = 9;
+            break;
         case 'D':
-        semitone = 7;
-        break;
+            semitone = 7;
+            break;
         case 'E':
-        semitone = 5;
-        break;
+            semitone = 5;
+            break;
         case 'F':
-        semitone = 4;
-        break;
+            semitone = 4;
+            break;
         case 'G':
-        semitone = 2;
-        break;
+            semitone = 2;
+            break;
     }
 
     //The notes not A or B are checked for Octave and semitone is adjusted to either side of A4
@@ -129,7 +129,7 @@ int frequency(string note)
     }
 
     //the exponent is floated, then 2 to the exponent multipled by 440 and rounded
-    float expo = semitone/12.0;
+    float expo = semitone / 12.0;
     return round(440 * pow(2, expo));
 
 
