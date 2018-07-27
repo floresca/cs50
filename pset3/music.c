@@ -30,6 +30,7 @@ int frequency(string note)
     int type = 1;
     char carrizo = note[0];
 
+    //This code will immediately check whether flat or sharp
     if (strlen(note) == 2)
     {
         Octave = atoi(&note[1]);
@@ -43,7 +44,7 @@ int frequency(string note)
         }
     }
 
-
+    //Note A is checked for either A4 or Octave
     if (carrizo == 'A')
     {
         if (Octave == 4 && strlen(note) == 2)
@@ -60,6 +61,7 @@ int frequency(string note)
         }
     }
 
+    //Note B is checked separately from the other notes due to being at the end of the Octave. It is also checked for Octave
     else if (carrizo == 'B')
     {
         if (Octave == 4)
@@ -76,27 +78,27 @@ int frequency(string note)
         }
     }
 
-    else if (carrizo == 'C')
+    //All other notes get their semitone called out
+    switch(carrizo)
     {
+        case 'C':
         semitone = 9;
-    }
-    else if (carrizo == 'D')
-    {
+        break;
+        case 'D':
         semitone = 7;
-    }
-    else if (carrizo == 'E')
-    {
+        break;
+        case 'E':
         semitone = 5;
-    }
-    else if (carrizo == 'F')
-    {
+        break;
+        case 'F':
         semitone = 4;
-    }
-    else if (carrizo == 'G')
-    {
+        break;
+        case 'G':
         semitone = 2;
+        break;
     }
 
+    //The notes not A or B are checked for Octave and semitone is adjusted to either side of A4
     if (carrizo != 'B' && carrizo != 'A')
     {
         if (Octave > 4)
@@ -113,37 +115,20 @@ int frequency(string note)
         }
     }
 
+    //If the note had a Sharp or Flat its semitone is adjusted one space up or down
     if (strlen(note) == 3)
     {
-        if (Octave > 4 && type == 1)
+        if ((Octave > 4 && type == 1) || (Octave < 4 && type == 1) || (Octave == 4 && type == 1))
         {
             semitone++;
         }
-        else if (Octave > 4 && type == 0)
+        else if ((Octave > 4 && type == 0) || (Octave < 4 && type == 0) || (Octave == 4 && type == 0))
         {
             semitone--;
-        }
-        else if (Octave < 4 && type == 1)
-        {
-            semitone++;
-        }
-        else if (Octave < 4 && type == 0)
-        {
-            semitone--;
-        }
-        else if (Octave == 4)
-        {
-            if (type == 1)
-            {
-                semitone++;
-            }
-            else
-            {
-                semitone--;
-            }
         }
     }
 
+    //the exponent is floated, then 2 to the exponent multipled by 440 and rounded
     float expo = semitone/12.0;
     return round(440 * pow(2, expo));
 
@@ -153,5 +138,6 @@ int frequency(string note)
 // Determines whether a string represents a rest
 bool is_rest(string s)
 {
+    //boolean check for whether a black/empty string was passed to the function
     return !strlen(s);
 }
