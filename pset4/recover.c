@@ -20,7 +20,7 @@ int main(int numOfArguments, string argValues[])
         char *FileName = "car.jpg";
         FILE *newFiles = fopen(FileName, "w");
 
-        while(fread(blockSize, 512, 1, card) == 1)
+        do
         {
             //if the loop encounters a header file then do the following
             if (blockSize[0] == 0xff && blockSize[1] == 0xd8 && blockSize[2] == 0xff && (blockSize[3] & 0xf0) == 0xe0)
@@ -42,16 +42,22 @@ int main(int numOfArguments, string argValues[])
 
                 //make a new file
                 // newFiles = fopen(FileName, "w");
-
+                fwrite(blockSize, 512, 1, newFiles);
                 //File is now open again
                 isFileOpen = 1;
             }
+            //if the file is open the write to it
+            else if (isFileOpen == 1)
+            {
+                //write the content to the currently open file
+                fwrite(blockSize, 512, 1, newFiles);
+            }
 
-            //write the content to the currently open file
-            fwrite(blockSize, 512, 1, newFiles);
         }
+        while(fread(blockSize, 512, 1, card) != 0);
+
         printf("Total number of jpgs is %i\n", imgcount);
-        // fclose(card);
+        fclose(card);
 
         // fclose(newFiles);
         return 0;
